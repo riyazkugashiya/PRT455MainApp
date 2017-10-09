@@ -1,0 +1,50 @@
+﻿@model IEnumerable<EventManagementSystem.tblEventDetail>
+@{
+    ViewBag.Title = "All Events";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                All Events
+                <small>posted by you</small>
+            </h1>
+            
+        </div>
+    </div>
+    <h4>
+        @Html.ActionLink("Create New Event", "Create")
+    </h4>
+    <!-- /.row -->
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 portfolio-item">
+                <a href="@Url.Action("Details", "tblEventDetails", new { id=item.ID })">
+                    @if(item.Picture != null)
+                    { 
+                        <img src="~/EventUploadFiles/@item.Picture" class="img-responsive" />
+                    }
+                    else
+                    {
+                        <img src="~/Content/noPic.png" class="img-responsive" />
+                        @*<img src="http://placehold.it/700x400" class="img-responsive">*@
+                    }
+                </a>
+            <h4>
+                <a href="@Url.Action("Details", "tblEventDetails", new { id=item.ID })">
+                    @Html.DisplayFor(modelItem => item.EventTitle)
+                </a><span>on </span> @Html.DisplayFor(modelItem => item.DateTime)
+                
+                </h4>
+                <span><b>Description</b></span>
+                <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                <p><a class="btn btn-info" href="@Url.Action("InvitePeople", "tblEventDetails", new { id=item.ID })">Invite People</a></p>
+            </div>
+        }
+    </div>
+
+</div>
+

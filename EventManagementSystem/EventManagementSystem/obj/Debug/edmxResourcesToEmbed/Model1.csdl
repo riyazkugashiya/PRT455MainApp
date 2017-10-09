@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbEventManagementSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="dbEventManagementSystemEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AspNetRoles" EntityType="dbEventManagementSystemModel.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="dbEventManagementSystemModel.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="dbEventManagementSystemModel.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="dbEventManagementSystemModel.AspNetUser" />
+    <EntitySet Name="sysdiagrams" EntityType="dbEventManagementSystemModel.sysdiagram" />
+    <EntitySet Name="tblEventDetails" EntityType="dbEventManagementSystemModel.tblEventDetail" />
+    <EntitySet Name="tblEventInvitationInfoes" EntityType="dbEventManagementSystemModel.tblEventInvitationInfo" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="dbEventManagementSystemModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="dbEventManagementSystemModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblEventDetail_AspNetUsers" Association="dbEventManagementSystemModel.FK_tblEventDetail_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="tblEventDetail" EntitySet="tblEventDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblEventInvitationInfo_AspNetUsers" Association="dbEventManagementSystemModel.FK_tblEventInvitationInfo_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="tblEventInvitationInfo" EntitySet="tblEventInvitationInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblEventInvitationInfo_AspNetUsers1" Association="dbEventManagementSystemModel.FK_tblEventInvitationInfo_AspNetUsers1">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="tblEventInvitationInfo" EntitySet="tblEventInvitationInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblEventInvitationInfo_tblEventDetail" Association="dbEventManagementSystemModel.FK_tblEventInvitationInfo_tblEventDetail">
+      <End Role="tblEventDetail" EntitySet="tblEventDetails" />
+      <End Role="tblEventInvitationInfo" EntitySet="tblEventInvitationInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="dbEventManagementSystemModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="dbEventManagementSystemModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="dbEventManagementSystemModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="dbEventManagementSystemModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNo" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="dbEventManagementSystemModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="dbEventManagementSystemModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+    <NavigationProperty Name="tblEventDetails" Relationship="dbEventManagementSystemModel.FK_tblEventDetail_AspNetUsers" FromRole="AspNetUser" ToRole="tblEventDetail" />
+    <NavigationProperty Name="tblEventInvitationInfoes" Relationship="dbEventManagementSystemModel.FK_tblEventInvitationInfo_AspNetUsers" FromRole="AspNetUser" ToRole="tblEventInvitationInfo" />
+    <NavigationProperty Name="tblEventInvitationInfoes1" Relationship="dbEventManagementSystemModel.FK_tblEventInvitationInfo_AspNetUsers1" FromRole="AspNetUser" ToRole="tblEventInvitationInfo" />
+    <NavigationProperty Name="AspNetRoles" Relationship="dbEventManagementSystemModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblEventDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="EventTitle" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Venue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="dbEventManagementSystemModel.FK_tblEventDetail_AspNetUsers" FromRole="tblEventDetail" ToRole="AspNetUser" />
+    <NavigationProperty Name="tblEventInvitationInfoes" Relationship="dbEventManagementSystemModel.FK_tblEventInvitationInfo_tblEventDetail" FromRole="tblEventDetail" ToRole="tblEventInvitationInfo" />
+  </EntityType>
+  <EntityType Name="tblEventInvitationInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventID" Type="Int32" Nullable="false" />
+    <Property Name="SenderID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="InvitedID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Response" Type="Boolean" />
+    <Property Name="Feedback" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="dbEventManagementSystemModel.FK_tblEventInvitationInfo_AspNetUsers" FromRole="tblEventInvitationInfo" ToRole="AspNetUser" />
+    <NavigationProperty Name="AspNetUser1" Relationship="dbEventManagementSystemModel.FK_tblEventInvitationInfo_AspNetUsers1" FromRole="tblEventInvitationInfo" ToRole="AspNetUser" />
+    <NavigationProperty Name="tblEventDetail" Relationship="dbEventManagementSystemModel.FK_tblEventInvitationInfo_tblEventDetail" FromRole="tblEventInvitationInfo" ToRole="tblEventDetail" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="dbEventManagementSystemModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="dbEventManagementSystemModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="dbEventManagementSystemModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="dbEventManagementSystemModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblEventDetail_AspNetUsers">
+    <End Type="dbEventManagementSystemModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="dbEventManagementSystemModel.tblEventDetail" Role="tblEventDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblEventDetail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblEventInvitationInfo_AspNetUsers">
+    <End Type="dbEventManagementSystemModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="dbEventManagementSystemModel.tblEventInvitationInfo" Role="tblEventInvitationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblEventInvitationInfo">
+        <PropertyRef Name="SenderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblEventInvitationInfo_AspNetUsers1">
+    <End Type="dbEventManagementSystemModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="dbEventManagementSystemModel.tblEventInvitationInfo" Role="tblEventInvitationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tblEventInvitationInfo">
+        <PropertyRef Name="InvitedID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblEventInvitationInfo_tblEventDetail">
+    <End Type="dbEventManagementSystemModel.tblEventDetail" Role="tblEventDetail" Multiplicity="1" />
+    <End Type="dbEventManagementSystemModel.tblEventInvitationInfo" Role="tblEventInvitationInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblEventDetail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblEventInvitationInfo">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="dbEventManagementSystemModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="dbEventManagementSystemModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+</Schema>
