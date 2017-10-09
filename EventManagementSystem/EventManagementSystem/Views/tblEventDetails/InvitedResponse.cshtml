@@ -1,0 +1,66 @@
+﻿@model IEnumerable<EventManagementSystem.tblEventInvitationInfo>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser1.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser1.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Response)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Feedback)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser1.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser1.LastName)
+        </td>
+        @if (item.Response != null)
+        {
+            <td>
+                @if (item.Response == true)
+                {
+                    <span>Yes</span>
+                }
+                else
+                {
+                    <span>No</span>
+                }
+
+            </td>
+        }
+        else
+        {
+            <td>
+            <span>Pending</span>
+            </td>
+        }
+        @if (item.Feedback != null)
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.Feedback)
+            </td>
+        }
+        else
+        {
+            <td>
+                <span>Pending</span>
+            </td>
+        }
+        
+        
+    </tr>
+}
+
+</table>

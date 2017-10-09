@@ -1,0 +1,104 @@
+﻿@model IEnumerable<EventManagementSystem.tblEventDetail>
+
+@{
+    ViewBag.Title = "Event Invitation";
+}
+
+<h2>Events Invitation</h2>
+<br/>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 portfolio-item">
+            @*<a href="@Url.Action("Details", "tblEventDetails", new { id=item.ID })">*@
+            @if(item.Picture != null)
+            { 
+                <img src="~/EventUploadFiles/@item.Picture" class="img-responsive" />
+                   
+            }
+            else
+            {
+                <img src="~/Content/noPic.png" class="img-responsive" />
+                        @*<img src="http://placehold.it/700x400" class="img-responsive">*@
+            }
+            @*</a>*@
+            <h4>
+                @* <a href="@Url.Action("Details", "tblEventDetails", new { id=item.ID })">*@
+                <span>Invitation from 
+                    <span style="color:#d34615"> @Html.DisplayFor(modelItem => item.AspNetUser.FirstName) @Html.DisplayFor(modelItem => item.AspNetUser.LastName) </span>
+                    for</span>
+                
+                @Html.DisplayFor(modelItem => item.EventTitle)
+
+                @*</a>*@
+                <br/>
+            </h4>
+            
+            <span><b>Date and Time: </b></span> @Html.DisplayFor(modelItem => item.DateTime)
+            <br/>
+            <span><b>Venue: </b> @Html.DisplayFor(modelItem => item.Venue)</span>
+            <br/>
+            <span><b>Description: </b></span>
+            <p>@Html.DisplayFor(modelItem => item.Description)</p>
+            
+            @*<p><a class="btn btn-info" href="@Url.Action("InvitePeople", "tblEventDetails", new { id=item.ID })">Give Response</a></p>*@
+            
+            <p><a href="javascript:void(0);" class="anchorDetail" data-id="@item.ID">Give Response</a></p>
+        </div>
+    }
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+
+        var TeamDetailPostBackURL = '/tblEventDetails/_ViewEventResponsePartial';
+        $(function () {
+            $(".anchorDetail").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: TeamDetailPostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "ID": id },
+                    datatype: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            //$("#closebtn").on('click',function(){
+            //    $('#myModal').modal('hide');
+
+            $("#closbtn").click(function () {
+                $('#myModal').modal('hide');
+            });
+        });
+
+    </script>
+
+    }
+
+  
+
+    <div id='myModal' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+
+    </div>   

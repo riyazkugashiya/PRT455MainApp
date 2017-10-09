@@ -1,0 +1,65 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<EventManagementSystem.AspNetUser>
+<br/>
+@{
+    ViewBag.Title = "InvitePeople";
+}
+
+<h2>InvitePeople <small>for your event</small></h2>
+<br/><br/>
+
+@using (Html.BeginForm("InvitePeople", "tblEventDetails", FormMethod.Get))
+{
+    
+    <span><b> Search Person </b> </span>
+    
+    @Html.TextBox("strUserSearch", null, new { @class = "searchbox" }) 
+    
+    <input type="submit" value="Search" class="btn btn-primary" />
+    
+    @Html.ActionLink("View All People", "InvitePeople")
+   
+}
+
+<br/>
+<table class="table table-hover">
+    
+    @*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th></th>
+    </tr>*@
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+
+            <td>
+                @*@Html.ActionLink("Send Invitation", "SendInvitation", new { id=item.Id })*@
+                <a class="btn btn-info" href="@Url.Action("SendInvitation", "tblEventDetails", new {id = item.Id})">Send Invitation</a>
+            </td>
+        </tr>
+    }
+
+</table>
+<div>
+    <h3 style="color: #d34615">Invited People Response</h3>
+    @{ Html.RenderAction("InvitedResponse", "tblEventDetails");}
+    
+</div>
